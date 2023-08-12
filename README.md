@@ -61,15 +61,61 @@
 - CONNECT: 클라이언트가 프록시를 통하여 서버와 SSL 통신을 하고자 할 때 사용합니다.
 - TRACE: 클라이언트와 서버간 통신 관리 및 디버깅을 할 때 사용합니다.
 
-  #
+#
 
-  ### 05. 서버가 보내주는 상태코드 종류에 대해서 설명해주세요
+### 05. 서버가 보내주는 상태코드 종류에 대해서 설명해주세요
 
-  - 100번대 Informational: 요청정보를 처리중 
-  - **200번대** Success: 요청을 정상적으로 처리함
-  - 300번대 Client Error: 요청을 완료하기 위해 추가 동작 필요
-  - **400번대** Client Error: 서버가 요청을 이해하지 못함
-  - 500번대 Server Error: 서버가 요청 처리 실패함
+- 100번대 Informational: 요청정보를 처리중 
+- **200번대** Success: 요청을 정상적으로 처리함
+- 300번대 Client Error: 요청을 완료하기 위해 추가 동작 필요
+- **400번대** Client Error: 서버가 요청을 이해하지 못함
+- **500번대** Server Error: 서버가 요청 처리 실패함
+
+#
+
+### 06. URLSession이란 무엇인가요?
+- URLSession이란 앱과 서버가 통신하기위한 API입니다.
+- 앱은 하나이상의 URLSession 인스턴스를 만들고 각 인스턴스는 관련 데이터 통신에 관여합니다
+- 각 Session에서 앱은 특정 URL에 대한 요청을 나타내는 일련의 작업을 추가합니다.
+- URLSession도 request(요청)와 response(응답)를 통해 통신합니다
+
+#
+
+### 07. URLSession은 어떻게 구성되어 있나요?
+
+- URLSession은 `URLSessionConfiguration`과 `URLSessionTask`를 통해 구성되어 있습니다
+- URLSessionConfiguaration의 종류는 다음과 같습니다
+1. `URLSession.shared()`(Shared Session): 싱글톤으로 사용되는 세션으로 기본요청을 할 수 있습니다.
+2. `URLSession(configuration:.defaul)`(Default Session): 기본세션은 이전의 공유세션보다 좀더 커스터마이징해서 사용할 수 있습니다. 순차적으로 데이터를 처리하기 위해 델리게이트를 지정할 수 있습니다
+3. `URLSession(configuration:.ephemeral)`(Ephemeral Session): 임시세션은 공유세션과 비슷하지만 캐시, 쿠키, 사용자인증정보를 디스크에 저장하지 않습니다. 메모리에 올려서 세션을 사용하기 때문에 세션완료시 데이터가 사라집니다.
+4. `URLSession(configuration:.background)`(Background Session): 백그라운드 세션은 앱이 실행되지 않는 동안 컨텐츠 업로드, 다운로드를 할 수 있습니다.
+- `URLSessionTask`의 종류로는 다음과 같습니다
+1. `URLSessionDataTask`: 데이터 객체를 사용하여 데이터 요청 및 응답을 수행합니다. 주로 짧고 빈번하게 사용되는 경우에 이용됩니다.
+2. `URLSessionUploadTask`: 파일형태의 업로드를 통신하는데 사용됩니다. 앱이 실행되지 않았을 때 백그라운드 업로드를 지원합니다
+3. `URLSessionDownloadTask`: 데이터를 다운받아서 파일형태로 저장하는 작업을 수행합니다. 백그라운드 다운로드를 지원합니다.
+4. `URLSessionStreamTask`: TCP/IP 영역을 사용할 때 만듭니다.
+5. `URLSessionWebSocketTask`: 웹소켓 프로토콜로 통신합니다.
+
+#
+
+### 08. URLSession은 어떻게 구현되나요?
+
+1. Session Configuration을 결정하고, Session을 생성합니다.
+2. 통신할 URL과 Request 객체를 설정합니다
+3. 사용할 Task를 결정하고 그에 맞는 Completion Handler 나 Delegate 메소드들을 작성합니다
+4. 해당 Task를 실행합니다
+5. Task 완료 후 Completion Handler 클로저가 호출됩니다.
+
+<br/>
+
+---
+
+## openweather 날씨 API 사용해보기
+
+<br/>
+
+### 01. 
+
 
 
 
